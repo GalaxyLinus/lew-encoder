@@ -1,10 +1,9 @@
 # lew-encoder  
-translates any text you want into lew language  
+translates any text you want into lew language or any other that follows the pattern
   
 ## explanation  
 vocal > vocal + lew + vocal  
   
-use advanced to add an input for custom lew alternative  
   
 e.g.  
 - Hi > Hilewi
