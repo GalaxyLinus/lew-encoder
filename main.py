@@ -1,32 +1,49 @@
-inputtextraw = input("What to en/decrypt?\n").lower()
+# Get user input
+inputtextraw = input("What to en/decrypt?\n")  # .lower()
+# Get short input
+shortraw = input("What short to use?\n")
+
+# set the message to be translated (inputtext)
 inputtext = inputtextraw
+# set the short
 shortraw = "lew"
-short = "@"
-# shortraw = input("What short?\n").lower()
+# list of characters to check
+vList = ['a', 'e', 'i', 'o', 'u', 'ä', 'ö', 'ü']
 
 
-if "a" + shortraw + "a" in inputtext or "e" + shortraw + "e" in inputtext or "i" + shortraw + "i" in inputtext or "o" + shortraw + "o" in inputtext or "u" + shortraw + "u" in inputtext:
-    # DECODE
-    try:
-        inputtext = inputtext.replace(shortraw, short)
-        inputtext = inputtext.replace("e" + short + "e", "e")
-        inputtext = inputtext.replace("a" + short + "a", "a")
-        inputtext = inputtext.replace("i" + short + "i", "i")
-        inputtext = inputtext.replace("o" + short + "o", "o")
-        inputtext = inputtext.replace("u" + short + "u", "u")
-        result = inputtext
-    except:
-        print("error")
+def is_encoded(inputtext, shortraw):
+    for c in vList:
+        if c + shortraw + c in inputtext:
+            return True
+
+    return False
+
+
+def decode_string(inputtext, shortraw):
+    for c in vList:
+        inputtext = inputtext.replace(c + shortraw, '')
+    return inputtext
+
+
+def encode_string(inputtext, shortraw):
+    data = []
+
+    for c in inputtext:
+        if c in vList and not data:
+            data.append(c + shortraw + c)
+        elif c in vList and shortraw not in data[-1]:
+            data.append(c + shortraw + c)
+        else:
+            data.append(c)
+
+    return ''.join(data)
+
+
+if is_encoded(inputtextraw, shortraw):
+    result = decode_string(inputtext, shortraw)
+
     print('\n"' + inputtextraw + '" means:\n' + result + '\n')
 else:
-    # ENCODE
-    try:
-        inputtext = inputtext.replace("e", "e" + short + "e")
-        inputtext = inputtext.replace("a", "a" + short + "a")
-        inputtext = inputtext.replace("i", "i" + short + "i")
-        inputtext = inputtext.replace("o", "o" + short + "o")
-        inputtext = inputtext.replace("u", "u" + short + "u")
-        result = inputtext.replace(short, shortraw)
-    except:
-        print("error")
+    result = encode_string(inputtext, shortraw)
+
     print('\n"' + inputtextraw + '" in ' + shortraw + ' code is:\n' + result + '\n')
